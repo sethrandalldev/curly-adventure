@@ -1,5 +1,4 @@
 import './App.css';
-import NavBar from './components/NavBar';
 import Home from './pages/Home';
 import Login from './pages/Login';
 import Register from './pages/Register';
@@ -8,18 +7,16 @@ import {
   Switch,
   Route
 } from 'react-router-dom';
+import PrivateRoute from './PrivateRoute';
 
 function App() {
   return (
     <div className="App">
       <BrowserRouter>
-        <NavBar />
-
-
         <Switch>
-          <Route exact path="/">
+          <PrivateRoute exact path="/">
             <Home />
-          </Route>
+          </PrivateRoute>
           <Route exact path="/login">
             <Login />
           </Route>

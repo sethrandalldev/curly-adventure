@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import {
   AppBar,
@@ -28,7 +28,8 @@ const useStyles = makeStyles((theme) => ({
 
 function NavBar() {
   const classes = useStyles();
-  const user = JSON.parse(sessionStorage.getItem('user'));
+  const user = sessionStorage.getItem('user') ? JSON.parse(sessionStorage.getItem('user')) : '';
+  console.log(user);
   const onClick = user ? () => sessionStorage.setItem('user', '') : () => {};
 
   return (

@@ -42,7 +42,7 @@ function Register() {
   const [confirmPassword, setConfirmPassword] = useState('');
 
   const handleInputChange = (e, setValue) => {
-    const {name, value} = e.target;
+    const {value} = e.target;
     setValue(value);
   }
 
@@ -53,8 +53,12 @@ function Register() {
       email,
       password,
       confirmPassword
+    }).then(isAuthenticated => {
+      if (isAuthenticated) {
+        history.push('/');
+      }
     });
-    history.push('/');
+    
   }
 
   return (

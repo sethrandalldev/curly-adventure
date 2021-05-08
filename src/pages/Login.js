@@ -40,22 +40,22 @@ function Login() {
   const [password, setPassword] = useState('');
 
   const handleInputChange = (e, setValue) => {
-    const {name, value} = e.target;
+    const {value} = e.target;
     setValue(value);
   }
 
   const formSubmit = (e) => {
     e.preventDefault();
-    const authenticated = login({
+    const isAuthenticated = login({
       email,
       password,
     });
-    console.log(authenticated);
-    if (authenticated) {
-      history.push('/');
-    }
+    isAuthenticated.then(function (val) {
+      if (val) {
+        history.push('/');
+      }
+    });
   }
-  console.log(sessionStorage.getItem('user'));
   return (
     <div className={classes.formContainer}>
       <h1>Login</h1>

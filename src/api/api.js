@@ -1,16 +1,19 @@
 import axios from 'axios';
 
 export async function login(user) {
-  await axios.post('http://localhost:4000/login', { ...user })
+  const result = await axios.post('http://localhost:4000/login', { ...user })
     .then(function (response) {
       console.log(response);
       sessionStorage.setItem('user', JSON.stringify(response.data));
+      console.log(true);
       return true;
     })
     .catch(function (error) {
-      console.log(error)
+      console.log(false);
+      console.log(error);
       return false;
-    })
+    });
+  return result;
 }
 
 export function register(user) {
