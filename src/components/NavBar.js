@@ -4,7 +4,6 @@ import {
   AppBar,
   Toolbar,
   Typography,
-  Button,
 } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 
@@ -29,6 +28,8 @@ const useStyles = makeStyles((theme) => ({
 
 function NavBar() {
   const classes = useStyles();
+  const user = JSON.parse(sessionStorage.getItem('user'));
+  const onClick = user ? () => sessionStorage.setItem('user', '') : () => {};
 
   return (
       <div className={classes.root}>
@@ -39,7 +40,9 @@ function NavBar() {
                 Home
               </Link>
             </Typography>
-            <Button color="inherit">Login</Button>
+            <Link to='/login' className={classes.link} onClick={onClick}>
+              {user ? 'Logout' : 'Login/Register'}
+            </Link>
           </Toolbar>
         </AppBar>
       </div>
