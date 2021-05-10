@@ -13,7 +13,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flexDirection: 'column',
     width: '400px',
-    margin: '100px auto',
+    margin: '50px auto',
     padding: '15px',
     borderRadius: '25px',
     boxShadow: '0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19)'
@@ -30,13 +30,18 @@ const useStyles = makeStyles((theme) => ({
   createLink: {
     textDecoration: 'none',
     color: theme.palette.secondary.main,
+  },
+  header: {
+    color: theme.palette.secondary.main,
+    fontSize: '48px',
   }
 }));
 
 function Register() {
   const classes = useStyles();
   let history = useHistory();
-  const [name, setName] = useState('');
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -49,7 +54,8 @@ function Register() {
   const formSubmit = (e) => {
     e.preventDefault();
     register({
-      name,
+      firstName,
+      lastName,
       email,
       password,
       confirmPassword
@@ -62,43 +68,53 @@ function Register() {
   }
 
   return (
-    <div className={classes.formContainer}>
-      <h1>Register</h1>
-      <form className={classes.form} onSubmit={formSubmit}>
-        <TextField 
-          className={classes.textfield} 
-          required 
-          label="Name" 
-          value={name}
-          onChange={(e) => handleInputChange(e, setName)}
-        />
-        <TextField 
-          className={classes.textfield} 
-          required 
-          label="Email" 
-          value={email}
-          onChange={(e) => handleInputChange(e, setEmail)}
-        />
-        <TextField 
-          className={classes.textfield} 
-          required 
-          label="Password" 
-          type="password" 
-          value={password}
-          onChange={(e) => handleInputChange(e, setPassword)}
-        />
-        <TextField 
-          className={classes.textfield} 
-          required 
-          label="Confirm Password" 
-          type="password" 
-          value={confirmPassword}
-          onChange={(e) => handleInputChange(e, setConfirmPassword)}
-        />
-        <br />
-        <Button type="submit" variant="contained" color="secondary" className={classes.submitButton}>Submit</Button>
-      </form>
-      <Link to="/login" className={classes.createLink}>Login to Account</Link>
+    <div>
+      <h1 className={classes.header}>Shelfinator</h1>
+      <div className={classes.formContainer}>
+        <h1>Register</h1>
+        <form className={classes.form} onSubmit={formSubmit}>
+          <TextField 
+            className={classes.textfield} 
+            required 
+            label="First Name" 
+            value={firstName}
+            onChange={(e) => handleInputChange(e, setFirstName)}
+          />
+          <TextField 
+            className={classes.textfield} 
+            required 
+            label="Last Name" 
+            value={lastName}
+            onChange={(e) => handleInputChange(e, setLastName)}
+          />
+          <TextField 
+            className={classes.textfield} 
+            required 
+            label="Email" 
+            value={email}
+            onChange={(e) => handleInputChange(e, setEmail)}
+          />
+          <TextField 
+            className={classes.textfield} 
+            required 
+            label="Password" 
+            type="password" 
+            value={password}
+            onChange={(e) => handleInputChange(e, setPassword)}
+          />
+          <TextField 
+            className={classes.textfield} 
+            required 
+            label="Confirm Password" 
+            type="password" 
+            value={confirmPassword}
+            onChange={(e) => handleInputChange(e, setConfirmPassword)}
+          />
+          <br />
+          <Button type="submit" variant="contained" color="secondary" className={classes.submitButton}>Submit</Button>
+        </form>
+        <Link to="/login" className={classes.createLink}>Login to Account</Link>
+      </div>
     </div>
   );
 }

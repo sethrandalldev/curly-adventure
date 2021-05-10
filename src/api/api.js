@@ -16,8 +16,8 @@ export async function login(user) {
   return result;
 }
 
-export function register(user) {
-  axios.post('http://localhost:4000/register', { ...user })
+export async function register(user) {
+  const result = await axios.post('http://localhost:4000/register', { ...user })
     .then(function (response) {
       console.log(response);
       return response;
@@ -28,4 +28,41 @@ export function register(user) {
     .then(function () {
       console.log('register request complete');
     })
+  return result;
+}
+
+export async function createBook(book) {
+  const result = await axios.post('http://localhost:4000/books', { ...book })
+    .then(function (response) {
+      console.log(response);
+      return response;
+    })
+    .catch(function (error) {
+      console.log(error)
+    })
+  return result;
+}
+
+export async function getBooks() {
+  const result = await axios.get('http://localhost:4000/books')
+    .then(function (response) {
+      console.log(response);
+      return response;
+    })
+    .catch(function (error) {
+      console.log(error)
+    })
+  return result;
+}
+
+export async function getUserBooks() {
+  const result = await axios.get('http://localhost:4000/userBooks')
+    .then(function (response) {
+      console.log(response);
+      return response;
+    })
+    .catch(function (error) {
+      console.log(error)
+    })
+  return result;
 }
