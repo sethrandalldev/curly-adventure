@@ -79,11 +79,16 @@ function NavBar() {
               open={Boolean(anchorEl)}
               onClose={handleClose}
             >
+              <MenuItem onClick={handleClose}>
+                <Link to='/profile' className={classes.link}>
+                  My Account
+                </Link>
+              </MenuItem>
               <MenuItem
                 onClick={handleClose}
               >
                 <Link to='/login' className={classes.link} onClick={onClick}>
-                  {user ? 'Logout' : 'Login/Register'}
+                  Logout
                 </Link>
               </MenuItem>
             </Menu>

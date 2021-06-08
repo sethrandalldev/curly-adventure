@@ -13,7 +13,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flexDirection: 'column',
     width: '400px',
-    margin: '100px auto',
+    margin: '80px auto',
     padding: '15px',
     borderRadius: '25px',
     boxShadow: '0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19)'
@@ -30,6 +30,17 @@ const useStyles = makeStyles((theme) => ({
   createLink: {
     textDecoration: 'none',
     color: theme.palette.secondary.main,
+  },
+  header: {
+    color: theme.palette.secondary.main,
+    fontSize: '48px',
+    margin: '30px 0 10px'
+  },
+  subheader: {
+    color: '#000',
+    fontSize: '24px',
+    fontWeight: '400',
+    margin: '0'
   }
 }));
 
@@ -57,28 +68,32 @@ function Login() {
     });
   }
   return (
-    <div className={classes.formContainer}>
-      <h1>Login</h1>
-      <form className={classes.form} onSubmit={formSubmit}>
-        <TextField 
-          className={classes.textfield} 
-          required 
-          label="Email" 
-          value={email}
-          onChange={(e) => handleInputChange(e, setEmail)}
-        />
-        <TextField 
-          className={classes.textfield} 
-          required 
-          label="Password" 
-          type="password" 
-          value={password}
-          onChange={(e) => handleInputChange(e, setPassword)}
-        />
-        <br />
-        <Button type="submit" variant="contained" color="secondary" className={classes.submitButton}>Submit</Button>
-      </form>
-      <Link to="/register" className={classes.createLink}>Create New Account</Link>
+    <div>
+      <h1 className={classes.header}>Shelfinator</h1>
+      <h3 className={classes.subheader}>A virtual bookshelf.</h3>
+      <div className={classes.formContainer}>
+        <h1>Login</h1>
+        <form className={classes.form} onSubmit={formSubmit}>
+          <TextField 
+            className={classes.textfield} 
+            required 
+            label="Email" 
+            value={email}
+            onChange={(e) => handleInputChange(e, setEmail)}
+          />
+          <TextField 
+            className={classes.textfield} 
+            required 
+            label="Password" 
+            type="password" 
+            value={password}
+            onChange={(e) => handleInputChange(e, setPassword)}
+          />
+          <br />
+          <Button type="submit" variant="contained" color="secondary" className={classes.submitButton}>Submit</Button>
+        </form>
+        <Link to="/register" className={classes.createLink}>Create New Account</Link>
+      </div>
     </div>
   );
 }
