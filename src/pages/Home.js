@@ -27,7 +27,7 @@ function Home() {
         user={user}
         booksData={booksData}
       />
-      <h3>Books On Your Shelf</h3>
+      <h3>Your Bookshelf</h3>
       <BooksTable 
         booksData={booksData} 
         user={user}
