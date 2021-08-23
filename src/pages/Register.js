@@ -34,6 +34,13 @@ const useStyles = makeStyles((theme) => ({
   header: {
     color: theme.palette.secondary.main,
     fontSize: '48px',
+    margin: '30px 0 10px'
+  },
+  subheader: {
+    color: '#000',
+    fontSize: '24px',
+    fontWeight: '400',
+    margin: '0'
   }
 }));
 
@@ -70,6 +77,7 @@ function Register() {
   return (
     <div>
       <h1 className={classes.header}>Shelfinator</h1>
+      <h3 className={classes.subheader}>A virtual bookshelf.</h3>
       <div className={classes.formContainer}>
         <h1>Register</h1>
         <form className={classes.form} onSubmit={formSubmit}>
