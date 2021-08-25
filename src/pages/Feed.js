@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
+import NavBar from "../components/NavBar";
 import { getBooks, getUserBooks } from "../api/api";
 import BooksTable from "../components/BooksTable";
 import BookForm from "../components/BookForm";
 
-function ProfileMain() {
+function Feed() {
   let user = sessionStorage.getItem("user")
     ? JSON.parse(sessionStorage.getItem("user"))
     : null;
@@ -22,6 +23,7 @@ function ProfileMain() {
 
   return (
     <div>
+      <NavBar />
       <BookForm setBooksData={setBooksData} user={user} booksData={booksData} />
       <h3>Your Bookshelf</h3>
       <BooksTable booksData={booksData} user={user} />
@@ -29,4 +31,4 @@ function ProfileMain() {
   );
 }
 
-export default ProfileMain;
+export default Feed;

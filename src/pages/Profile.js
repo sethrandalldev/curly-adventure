@@ -63,20 +63,12 @@ TabPanel.propTypes = {
   value: PropTypes.any.isRequired,
 };
 
-function a11yProps(index) {
-  return {
-    id: `tab-${index} `,
-    "aria-controls": `tabpanel-${index}`,
-  };
-}
-
 function Profile() {
   const classes = useStyles();
   let user = sessionStorage.getItem("user")
     ? JSON.parse(sessionStorage.getItem("user"))
     : null;
   const [booksData, setBooksData] = useState({ userBooks: [], books: [] });
-  const [tabValue, setTabValue] = useState(0);
 
   useEffect(() => {
     getBooks().then((booksVal) => {
@@ -87,10 +79,6 @@ function Profile() {
       });
     });
   }, []);
-
-  const handleTabChange = (e, newValue) => {
-    setTabValue(newValue);
-  };
 
   return (
     <div>
