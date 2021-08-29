@@ -4,7 +4,7 @@ import { makeStyles } from "@material-ui/core/styles";
 const useStyles = makeStyles((theme) => ({
   profileBar: {
     width: "400px",
-    backgroundColor: "#A79AB2",
+    backgroundColor: "#282C34",
     margin: "40px",
     borderRadius: "20px",
     color: "#fff",

@@ -1,14 +1,12 @@
-import './App.css';
-import Home from './pages/Home';
-import Login from './pages/Login';
-import Register from './pages/Register';
-import Profile from './pages/Profile';
-import {
-  BrowserRouter,
-  Switch,
-  Route
-} from 'react-router-dom';
-import PrivateRoute from './PrivateRoute';
+import "./App.css";
+import Home from "./pages/Home";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
+import Profile from "./pages/Profile";
+import { BrowserRouter, Switch, Route } from "react-router-dom";
+import PrivateRoute from "./PrivateRoute";
+import NotebookRoute from "./NotebookRoute";
+import Notebook from "./pages/Notebook";
 
 function App() {
   return (
@@ -24,11 +22,14 @@ function App() {
           <Route exact path="/register">
             <Register />
           </Route>
-          <Route exact path="/profile">
+          <PrivateRoute exact path="/profile">
             <Profile />
-          </Route>
+          </PrivateRoute>
+          <NotebookRoute path="/notebook/:id">
+            <Notebook />
+          </NotebookRoute>
         </Switch>
-      </BrowserRouter>  
+      </BrowserRouter>
     </div>
   );
 }

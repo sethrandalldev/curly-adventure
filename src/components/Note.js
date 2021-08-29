@@ -8,7 +8,6 @@ import {
   Select,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import { createBook } from "../api/api";
 
 const useStyles = makeStyles((theme) => ({
   formContainer: {
@@ -39,7 +38,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function BookForm({ user, booksData, setBooksData }) {
+function Note({ userId, booksData, setBooksData }) {
   const classes = useStyles();
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
@@ -50,30 +49,29 @@ function BookForm({ user, booksData, setBooksData }) {
     setValue(value);
   };
 
-  const formSubmit = (e) => {
-    e.preventDefault();
-    const book = createBook({
-      title,
-      author,
-      read: readStatus,
-      userId: user.id,
-      created: new Date().getTime(),
-      books: ["Hello", "World", "Foo", "Bar"],
-    });
-    book.then(function (val) {
-      if (val) {
-        setBooksData({
-          books: [...booksData.books, val.data.book],
-          userBooks: [...booksData.userBooks, val.data.userBook],
-        });
-      }
-    });
-  };
+  // const formSubmit = (e) => {
+  //   e.preventDefault();
+  //   // const book = addBookToUserReading({
+  //   //   userId,
+  //   //   title,
+  //   //   author,
+  //   //   read: readStatus,
+  //   //   created: new Date().getTime(),
+  //   // });
+  //   book.then(function (val) {
+  //     if (val) {
+  //       setBooksData({
+  //         books: [...booksData.books, val.data.book],
+  //         userBooks: [...booksData.userBooks, val.data.userBook],
+  //       });
+  //     }
+  //   });
+  // };
 
   return (
     <div className={classes.formContainer}>
       <h1>Add Book</h1>
-      <form className={classes.form} onSubmit={formSubmit}>
+      <form className={classes.form} onSubmit={() => {}}>
         <TextField
           className={classes.textfield}
           required
@@ -98,8 +96,8 @@ function BookForm({ user, booksData, setBooksData }) {
             onChange={(e) => setReadStatus(e.target.value)}
           >
             <MenuItem value={10}>Unread</MenuItem>
-            <MenuItem value={20}>Reading</MenuItem>
-            <MenuItem value={30}>Read</MenuItem>
+            <MenuItem value={20}>Currently Reading</MenuItem>
+            <MenuItem value={30}>Finished</MenuItem>
           </Select>
         </FormControl>
 
@@ -117,4 +115,4 @@ function BookForm({ user, booksData, setBooksData }) {
   );
 }
 
-export default BookForm;
+export default Note;
