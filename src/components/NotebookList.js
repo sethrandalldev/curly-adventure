@@ -1,37 +1,74 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { getNotebooksByUser } from "../api/api";
 import NotebookListHeader from "./NotebookListHeader";
 import NotebookListItem from "./NotebookListItem";
 import { makeStyles } from "@material-ui/core/styles";
+import { useSelector, useDispatch } from "react-redux";
+import {
+  Table,
+  TableHead,
+  TableRow,
+  TableCell,
+  TableBody,
+} from "@material-ui/core";
+import { addNotebooks } from "../features/notebooks";
 
 const useStyles = makeStyles({
   list: {
     width: 500,
-    margin: "0 auto",
+    margin: "50px auto",
+  },
+  columnHeader: {
+    fontWeight: "bold",
+    width: 220,
+  },
+  table: {
+    border: "3px solid #efefef",
+    marginTop: 15,
   },
 });
 
 function NotebookList() {
-  let user = sessionStorage.getItem("user")
-    ? JSON.parse(sessionStorage.getItem("user"))
-    : null;
-  const [notebooks, setNotebooks] = useState([]);
+  const userId = useSelector((state) => state.user.id);
+  const notebooks = useSelector((state) => state.notebooks.value);
   const classes = useStyles();
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    getNotebooksByUser(user.id).then((notebooksData) => {
-      console.log(notebooksData);
-      sessionStorage.setItem("notebooks", JSON.stringify(notebooksData.data));
-      setNotebooks(notebooksData.data);
-    });
+    if (notebooks.length === 0) {
+      getNotebooksByUser(userId).then((notebooksData) => {
+        dispatch(addNotebooks(notebooksData.data));
+      });
+    }
   }, []);
-
+  console.log(notebooks);
   return (
     <div className={classes.list}>
       <NotebookListHeader />
-      {notebooks.map((notebook) => {
-        return <NotebookListItem notebook={notebook} />;
-      })}
+      <Table className={classes.table}>
+        <TableHead className={classes.tableHead}>
+          <TableRow>
+            <TableCell className={classes.columnHeader}>Title</TableCell>
+            <TableCell className={classes.columnHeader}>Description</TableCell>
+            <TableCell></TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {notebooks.length ? (
+            notebooks.map((notebook) => {
+              return (
+                <NotebookListItem notebook={notebook} key={notebook._id} />
+              );
+            })
+          ) : (
+            <TableRow>
+              <TableCell>No Notebooks Created</TableCell>
+              <TableCell></TableCell>
+              <TableCell></TableCell>
+            </TableRow>
+          )}
+        </TableBody>
+      </Table>
     </div>
   );
 }

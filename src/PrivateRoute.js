@@ -1,19 +1,20 @@
-import React from 'react';
-import { Redirect, Route } from 'react-router-dom';
+import React from "react";
+import { Redirect, Route } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 export default function PrivateRoute({ children, ...rest }) {
-  let user = sessionStorage.getItem('user');
+  const userId = useSelector((state) => state.user.id);
   return (
     <Route
       {...rest}
       render={({ location }) =>
-        user ? (
+        userId.length ? (
           children
         ) : (
           <Redirect
             to={{
               pathname: "/login",
-              state: { from: location }
+              state: { from: location },
             }}
           />
         )

@@ -1,48 +1,49 @@
 import axios from "axios";
-import { addNotebook } from "../storage";
 
-export async function login(user) {
+export const login = async (user) => {
   const result = await axios
     .post("http://localhost:4000/login", { ...user })
-    .then(function (response) {
-      console.log(response);
-      sessionStorage.setItem("user", JSON.stringify(response.data));
-      console.log(true);
-      return true;
+    .then((response) => {
+      return response.data;
     })
     .catch(function (error) {
-      console.log(false);
-      console.log(error);
-      return false;
+      console.error(error);
     });
   return result;
-}
+};
 
 export async function register(user) {
   const result = await axios
     .post("http://localhost:4000/register", { ...user })
     .then(function (response) {
-      console.log(response);
       return response;
     })
     .catch(function (error) {
-      console.log(error);
-    })
-    .then(function () {
-      console.log("register request complete");
+      console.error(error);
     });
   return result;
 }
 
 export async function addNotebookToUser(data) {
   const result = await axios
-    .post("http://localhost:4000/notebook", { ...data })
+    .post("http://localhost:4000/notebooks", { ...data })
     .then(function (response) {
-      addNotebook(response.data);
       return response.data;
     })
     .catch(function (error) {
-      console.log(error);
+      console.error(error);
+    });
+  return result;
+}
+
+export async function deleteNotebook(notebookId, userId) {
+  const result = await axios
+    .delete(`http://localhost:4000/notebooks/${notebookId}`, { userId })
+    .then(function (response) {
+      return response.notebookId;
+    })
+    .catch(function (error) {
+      console.error(error);
     });
   return result;
 }
@@ -51,11 +52,10 @@ export async function getNotebooksByUser(userId) {
   const result = await axios
     .get(`http://localhost:4000/notebooks/${userId}`)
     .then(function (response) {
-      console.log(response);
       return response;
     })
     .catch(function (error) {
-      console.log(error);
+      console.error(error);
     });
   return result;
 }
@@ -64,11 +64,10 @@ export async function getPagesByNotebook(notebookId) {
   const result = await axios
     .get(`http://localhost:4000/pages/${notebookId}`)
     .then(function (response) {
-      console.log(response);
       return response;
     })
     .catch(function (error) {
-      console.log(error);
+      console.error(error);
     });
   return result;
 }

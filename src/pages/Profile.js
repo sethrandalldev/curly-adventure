@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { Box, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import NavBar from "../components/NavBar";
 import PropTypes from "prop-types";
 import ProfileBar from "../components/ProfileBar";
 import ProfileMain from "../components/ProfileMain";
@@ -64,13 +63,9 @@ TabPanel.propTypes = {
 
 function Profile() {
   const classes = useStyles();
-  let user = sessionStorage.getItem("user")
-    ? JSON.parse(sessionStorage.getItem("user"))
-    : null;
 
   return (
     <div>
-      <NavBar />
       <div className={classes.profileContainer}>
         <ProfileBar />
         <ProfileMain />

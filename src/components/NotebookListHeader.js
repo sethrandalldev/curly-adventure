@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { IconButton } from "@material-ui/core";
+import { IconButton, Tooltip } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
 import NewNotebook from "./NewNotebook";
 import { makeStyles } from "@material-ui/core/styles";
@@ -7,13 +7,12 @@ import { makeStyles } from "@material-ui/core/styles";
 const useStyles = makeStyles({
   header: {
     display: "flex",
-    textAlign: "left",
+    padding: 0,
+    justifyContent: "center",
   },
-  title: {
-    width: "50%",
-  },
-  description: {
-    width: "50%",
+  headerText: {
+    margin: 0,
+    paddingRight: 10,
   },
 });
 
@@ -25,15 +24,13 @@ function NotebookListHeader() {
   return (
     <div>
       <div className={classes.header}>
-        <h1>My Notebooks</h1>
-        <IconButton onClick={modalToggle}>
-          <AddIcon />
-        </IconButton>
+        <h1 className={classes.headerText}>My Notebooks</h1>
+        <Tooltip title="Create Notebook">
+          <IconButton onClick={modalToggle}>
+            <AddIcon />
+          </IconButton>
+        </Tooltip>
         <NewNotebook isOpen={isModalOpen} handleClose={modalToggle} />
-      </div>
-      <div className={classes.header}>
-        <h2 className={classes.title}>Title</h2>
-        <h2 className={classes.description}>Description</h2>
       </div>
     </div>
   );

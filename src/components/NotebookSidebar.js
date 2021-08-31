@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
@@ -55,6 +55,10 @@ function NotebookSidebar({ notebook }) {
   const [selectedMenuItem, setSelectedMenuItem] = useState("pages");
   const classes = useStyles();
   const [currentPage, setCurrentPage] = useState(null);
+
+  const renderPages = () => {
+    return <div></div>;
+  };
 
   return (
     <div className={classes.sidebar}>

@@ -3,6 +3,8 @@ import { Modal, TextField, Button } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { addNotebookToUser } from "../api/api";
 import { useHistory } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { addNotebooks } from "../features/notebooks";
 
 const useStyles = makeStyles((theme) => ({
   modalContainer: {},
@@ -30,17 +32,17 @@ function NewNotebook({ handleClose, isOpen }) {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const classes = useStyles();
-  const user = sessionStorage.getItem("user")
-    ? JSON.parse(sessionStorage.getItem("user"))
-    : "";
+  const userId = useSelector((state) => state.user.id);
   const history = useHistory();
+  const dispatch = useDispatch();
 
   const handleSubmit = () => {
     addNotebookToUser({
-      userId: user.id,
+      userId: userId,
       title,
       description,
     }).then((notebook) => {
+      dispatch(addNotebooks([notebook]));
       if (notebook._id) {
         history.push(`/notebook/${notebook._id}`);
       }

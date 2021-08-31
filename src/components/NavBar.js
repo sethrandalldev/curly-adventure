@@ -9,6 +9,9 @@ import {
   Button,
 } from "@material-ui/core";
 import { Link } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { setUser } from "../features/user";
+import { setNotebooks } from "../features/notebooks";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -42,12 +45,15 @@ const useStyles = makeStyles((theme) => ({
 
 function NavBar() {
   const classes = useStyles();
+  const dispatch = useDispatch();
   const [anchorEl, setAnchorEl] = useState(null);
-  const user = sessionStorage.getItem("user")
-    ? JSON.parse(sessionStorage.getItem("user"))
-    : "";
-  console.log(user);
-  const onClick = user ? () => sessionStorage.setItem("user", "") : () => {};
+  const userFirst = useSelector((state) => state.user.firstName);
+  const onClick = userFirst.length
+    ? () => {
+        dispatch(setUser({ id: "", firstName: "", lastName: "", email: "" }));
+        dispatch(setNotebooks);
+      }
+    : () => {};
 
   const handleMenuClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -73,7 +79,7 @@ function NavBar() {
             className={classes.menuButton}
           >
             <Typography align="left" variant="h6" className={classes.title}>
-              {user.firstName}
+              {userFirst}
             </Typography>
           </Button>
           <Menu

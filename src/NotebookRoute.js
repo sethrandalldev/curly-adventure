@@ -1,16 +1,15 @@
 import React from "react";
 import { Redirect, Route } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 function NotebookRoute({ children, ...rest }) {
-  const user = sessionStorage.getItem("user")
-    ? JSON.parse(sessionStorage.getItem("user"))
-    : "";
+  const userId = useSelector((state) => state.user.id);
 
   return (
     <Route
       {...rest}
       render={({ location }) => {
-        return user ? (
+        return userId.length ? (
           children
         ) : (
           <Redirect

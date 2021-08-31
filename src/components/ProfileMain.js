@@ -1,6 +1,4 @@
-import React, { useState, useEffect } from "react";
-import NotebookList from "../components/NotebookList";
-import BookForm from "./Note";
+import React from "react";
 
 function ProfileMain() {
   return <div>My Account</div>;

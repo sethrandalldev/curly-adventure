@@ -1,39 +1,48 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
+import { TableRow, TableCell, IconButton, Tooltip } from "@material-ui/core";
+import DeleteIcon from "@material-ui/icons/Delete";
+import { deleteNotebook } from "../api/api";
+import { removeNotebook } from "../features/notebooks";
+import { useDispatch } from "react-redux";
 
 const useStyles = makeStyles({
-  item: {
-    display: "flex",
+  row: {
     cursor: "pointer",
-    alignItems: "center",
-    textAlign: "left",
     "&:hover": {
       backgroundColor: "#efefef",
     },
-  },
-  title: {
-    margin: 0,
-    width: "50%",
-  },
-  description: {
-    margin: 0,
-    width: "50%",
   },
 });
 
 function NotebookListItem({ notebook }) {
   const history = useHistory();
   const classes = useStyles();
+  const dispatch = useDispatch();
+
+  const handleClick = (e) => {
+    e.stopPropagation();
+    deleteNotebook(notebook._id, notebook.userId).then(() => {
+      dispatch(removeNotebook(notebook._id));
+    });
+  };
+
   return (
-    <div
-      className={classes.item}
-      key={notebook.id}
+    <TableRow
+      className={classes.row}
       onClick={() => history.push(`/notebook/${notebook._id}`)}
     >
-      <h3 className={classes.title}>{notebook.title}</h3>
-      <p className={classes.description}>{notebook.description}</p>
-    </div>
+      <TableCell>{notebook.title}</TableCell>
+      <TableCell>{notebook.description}</TableCell>
+      <TableCell>
+        <Tooltip title="Delete Notebook">
+          <IconButton onClick={(e) => handleClick(e)}>
+            <DeleteIcon />
+          </IconButton>
+        </Tooltip>
+      </TableCell>
+    </TableRow>
   );
 }
 
