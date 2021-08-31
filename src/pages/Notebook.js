@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import NotebookSidebar from "../components/NotebookSidebar";
 import { makeStyles } from "@material-ui/core/styles";
 import { getPagesByNotebook } from "../api/api";
 import { useParams } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import Page from "../components/Page";
+import { setPages, setSelected } from "../features/pages";
 
 const useStyles = makeStyles((theme) => ({
   notebook: {
@@ -17,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
 
 function Notebook() {
   const classes = useStyles();
-  const [pages, setPages] = useState([]);
+  const dispatch = useDispatch();
   const { id } = useParams();
   const filteredNotebooks = useSelector(
     (state) => state.notebooks.value
@@ -27,11 +28,12 @@ function Notebook() {
   useEffect(() => {
     if (notebook) {
       getPagesByNotebook(notebook._id).then((pagesData) => {
-        setPages(pagesData.data);
+        dispatch(setPages(pagesData.data));
+        dispatch(setSelected(pagesData.data[0]));
       });
     }
   }, []);
-  console.log(pages);
+
   return (
     <div>
       <div className={classes.notebook}>

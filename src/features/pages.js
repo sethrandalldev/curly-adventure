@@ -4,6 +4,7 @@ export const pages = createSlice({
   name: "pages",
   initialState: {
     value: [],
+    selected: null,
   },
   reducers: {
     addPages: (state, action) => {
@@ -12,10 +13,13 @@ export const pages = createSlice({
     setPages: (state, action) => {
       state.value = action.payload;
     },
+    setSelected: (state, action) => {
+      state.selected = action.payload;
+    },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { addPages, setPages } = pages.actions;
+export const { addPages, setPages, setSelected } = pages.actions;
 
 export default pages.reducer;

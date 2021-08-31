@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
+import { useSelector } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
   sidebar: {
@@ -54,10 +55,15 @@ const useStyles = makeStyles((theme) => ({
 function NotebookSidebar({ notebook }) {
   const [selectedMenuItem, setSelectedMenuItem] = useState("pages");
   const classes = useStyles();
-  const [currentPage, setCurrentPage] = useState(null);
+  const pages = useSelector((state) => state.pages.value).filter(
+    (page) => page.notebookId === notebook._id
+  );
+  const selectedPage = useSelector((state) => state.pages.selected);
 
   const renderPages = () => {
-    return <div></div>;
+    for (const page of pages) {
+      return <p>{page.title}</p>;
+    }
   };
 
   return (
@@ -88,7 +94,7 @@ function NotebookSidebar({ notebook }) {
           Settings
         </p>
       </div>
-      <div className={classes.sidebarBody}></div>
+      <div className={classes.sidebarBody}>{renderPages()}</div>
     </div>
   );
 }

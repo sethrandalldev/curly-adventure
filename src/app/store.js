@@ -1,6 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 import userReducer from "../features/user";
 import notebooksReducer from "../features/notebooks";
+import pagesReducer from "../features/pages";
 
 const saveToSessionStorage = (state) => {
   console.log("save)");
@@ -29,6 +30,7 @@ const store = configureStore({
   reducer: {
     user: userReducer,
     notebooks: notebooksReducer,
+    pages: pagesReducer,
   },
   preloadedState: persistedStore,
 });
