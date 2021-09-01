@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import { Button } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { useSelector, useDispatch } from "react-redux";
-import { addPage } from "../features/pages";
+import { addPage, setSelected } from "../features/pages";
+import { addNotebookPage } from "../features/notebooks";
 import { addPageToNotebook } from "../api/api";
 
 const useStyles = makeStyles((theme) => ({
@@ -84,22 +85,28 @@ function NotebookSidebar({ notebook }) {
 
   const handleClick = () => {
     addPageToNotebook(notebook._id).then((page) => {
-      dispatch(addPage());
+      dispatch(addPage(page));
+      dispatch(addNotebookPage({ id: notebook._id, page }));
     });
   };
 
   const renderPages = () => {
-    for (const page of pages) {
+    return pages.map((page) => {
       return (
         <p
           className={
             selectedPage?._id === page._id ? classes.selectedPage : classes.page
           }
+          onClick={() =>
+            dispatch(
+              setSelected(pages[pages.findIndex((x) => x._id === page._id)])
+            )
+          }
         >
-          {page.title}
+          {page.title || "Untitled"}
         </p>
       );
-    }
+    });
   };
 
   const renderSettings = () => {

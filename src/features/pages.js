@@ -8,7 +8,7 @@ export const pages = createSlice({
   },
   reducers: {
     addPage: (state, action) => {
-      state.value = state.value.push(action.payload);
+      state.value.push(action.payload);
     },
     setPages: (state, action) => {
       state.value = action.payload;

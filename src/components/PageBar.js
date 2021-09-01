@@ -23,7 +23,7 @@ const PageBar = ({ handleClick }) => {
 
   return (
     <div className={classes.pageBar}>
-      <h2 className={classes.pageTitle}>{selectedPage?.title}</h2>
+      <h2 className={classes.pageTitle}>{selectedPage?.title || "Untitled"}</h2>
       <Button
         className={classes.saveButton}
         variant="contained"

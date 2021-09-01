@@ -17,10 +17,17 @@ export const notebooks = createSlice({
         (notebook) => notebook._id !== action.payload
       );
     },
+    addNotebookPage: (state, action) => {
+      const notebookIndex = state.value.findIndex(
+        (notebook) => notebook._id === action.payload.id
+      );
+      state.value[notebookIndex].pages.push(action.payload.page);
+    },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { addNotebooks, setNotebooks, removeNotebook } = notebooks.actions;
+export const { addNotebooks, setNotebooks, removeNotebook, addNotebookPage } =
+  notebooks.actions;
 
 export default notebooks.reducer;
