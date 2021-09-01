@@ -7,8 +7,8 @@ export const pages = createSlice({
     selected: null,
   },
   reducers: {
-    addPages: (state, action) => {
-      state.value = state.value.concat(action.payload);
+    addPage: (state, action) => {
+      state.value = state.value.push(action.payload);
     },
     setPages: (state, action) => {
       state.value = action.payload;
@@ -16,10 +16,16 @@ export const pages = createSlice({
     setSelected: (state, action) => {
       state.selected = action.payload;
     },
+    updatePage: (state, action) => {
+      const pageIndex = state.value.findIndex(
+        (page) => page._id === action.payload.id
+      );
+      state.value[pageIndex].body = action.payload.body;
+    },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { addPages, setPages, setSelected } = pages.actions;
+export const { addPage, setPages, setSelected, updatePage } = pages.actions;
 
 export default pages.reducer;

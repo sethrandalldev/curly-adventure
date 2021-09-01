@@ -1,6 +1,9 @@
 import React, { useState } from "react";
+import { Button } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { addPage } from "../features/pages";
+import { addPageToNotebook } from "../api/api";
 
 const useStyles = makeStyles((theme) => ({
   sidebar: {
@@ -17,15 +20,16 @@ const useStyles = makeStyles((theme) => ({
   description: {
     fontWeight: "normal",
     textAlign: "left",
-    margin: "5px 0",
+    margin: "5px 0 20px",
   },
   header: {
     padding: 15,
+    textAlign: "left",
   },
   sidebarMenu: {
     display: "flex",
     width: "100%",
-    margin: "50px 0",
+    margin: "20px 0 0",
     borderBottom: "3px solid #ffffff",
   },
   sidebarMenuItem: {
@@ -50,6 +54,23 @@ const useStyles = makeStyles((theme) => ({
     fontSize: "1.2rem",
     cursor: "pointer",
   },
+  page: {
+    cursor: "pointer",
+    "&:hover": {
+      backgroundColor: "#393D45",
+    },
+    padding: 10,
+    margin: 0,
+  },
+  selectedPage: {
+    cursor: "pointer",
+    "&:hover": {
+      backgroundColor: "#393D45",
+    },
+    padding: 10,
+    fontWeight: "bold",
+    margin: 0,
+  },
 }));
 
 function NotebookSidebar({ notebook }) {
@@ -59,11 +80,30 @@ function NotebookSidebar({ notebook }) {
     (page) => page.notebookId === notebook._id
   );
   const selectedPage = useSelector((state) => state.pages.selected);
+  const dispatch = useDispatch();
+
+  const handleClick = () => {
+    addPageToNotebook(notebook._id).then((page) => {
+      dispatch(addPage());
+    });
+  };
 
   const renderPages = () => {
     for (const page of pages) {
-      return <p>{page.title}</p>;
+      return (
+        <p
+          className={
+            selectedPage?._id === page._id ? classes.selectedPage : classes.page
+          }
+        >
+          {page.title}
+        </p>
+      );
     }
+  };
+
+  const renderSettings = () => {
+    return <p>notebook settings</p>;
   };
 
   return (
@@ -71,6 +111,9 @@ function NotebookSidebar({ notebook }) {
       <div className={classes.header}>
         <h1 className={classes.title}>{notebook.title}</h1>
         <h4 className={classes.description}>{notebook.description}</h4>
+        <Button variant="contained" onClick={handleClick}>
+          New Page
+        </Button>
       </div>
       <div className={classes.sidebarMenu}>
         <p
@@ -94,7 +137,9 @@ function NotebookSidebar({ notebook }) {
           Settings
         </p>
       </div>
-      <div className={classes.sidebarBody}>{renderPages()}</div>
+      <div className={classes.sidebarBody}>
+        {selectedMenuItem === "pages" ? renderPages() : renderSettings()}
+      </div>
     </div>
   );
 }

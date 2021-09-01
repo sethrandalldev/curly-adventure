@@ -41,7 +41,7 @@ function NotebookList() {
       });
     }
   }, []);
-  console.log(notebooks);
+
   return (
     <div className={classes.list}>
       <NotebookListHeader />

@@ -4,7 +4,6 @@ import notebooksReducer from "../features/notebooks";
 import pagesReducer from "../features/pages";
 
 const saveToSessionStorage = (state) => {
-  console.log("save)");
   try {
     sessionStorage.setItem("state", JSON.stringify(state));
   } catch (e) {
@@ -13,10 +12,8 @@ const saveToSessionStorage = (state) => {
 };
 
 const loadFromSessionStorage = () => {
-  console.log("load");
   try {
     const stateStr = sessionStorage.getItem("state");
-    console.log(JSON.parse(stateStr));
     return stateStr ? JSON.parse(stateStr) : undefined;
   } catch (e) {
     console.error(e);
@@ -36,7 +33,6 @@ const store = configureStore({
 });
 
 store.subscribe(() => {
-  console.log("subscribe");
   saveToSessionStorage(store.getState());
 });
 

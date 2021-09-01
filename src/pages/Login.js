@@ -64,12 +64,11 @@ function Login() {
     }).then((val) => {
       if (val) {
         dispatch(setUser(val));
-
         history.push("/");
       }
     });
   };
-  console.log("redirect");
+
   return userId.length ? (
     <Redirect to="/" />
   ) : (

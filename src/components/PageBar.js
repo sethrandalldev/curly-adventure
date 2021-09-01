@@ -17,9 +17,10 @@ const useStyles = makeStyles({
   },
 });
 
-const PageBar = () => {
+const PageBar = ({ handleClick }) => {
   const classes = useStyles();
   const selectedPage = useSelector((state) => state.pages.selected);
+
   return (
     <div className={classes.pageBar}>
       <h2 className={classes.pageTitle}>{selectedPage?.title}</h2>
@@ -27,6 +28,7 @@ const PageBar = () => {
         className={classes.saveButton}
         variant="contained"
         color="primary"
+        onClick={handleClick}
       >
         Save
       </Button>
