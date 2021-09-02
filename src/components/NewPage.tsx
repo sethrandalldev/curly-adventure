@@ -7,6 +7,14 @@ import { addPage } from "../features/pages";
 import { addNotebookPage } from "../features/notebooks";
 import { addPageToNotebook } from "../api/api";
 
+interface NewPageProps {
+  handleClose: () => void;
+  isOpen: boolean;
+  notebook: {
+    _id: string;
+  };
+}
+
 const useStyles = makeStyles((theme) => ({
   modalContainer: {},
   modal: {
@@ -29,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function NewPage({ handleClose, isOpen, notebook }) {
+function NewPage({ handleClose, isOpen, notebook }: NewPageProps) {
   const [title, setTitle] = useState("");
   const classes = useStyles();
   const dispatch = useDispatch();
