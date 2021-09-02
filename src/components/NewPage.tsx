@@ -1,18 +1,16 @@
 import React, { useState } from "react";
 import { Modal, TextField, Button } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import { useHistory } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { addPage } from "../features/pages";
 import { addNotebookPage } from "../features/notebooks";
 import { addPageToNotebook } from "../api/api";
+import { Notebook } from "../types";
 
 interface NewPageProps {
   handleClose: () => void;
   isOpen: boolean;
-  notebook: {
-    _id: string;
-  };
+  notebook: Notebook;
 }
 
 const useStyles = makeStyles((theme) => ({

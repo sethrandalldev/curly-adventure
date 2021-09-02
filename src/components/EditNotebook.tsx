@@ -1,10 +1,16 @@
 import React, { useState } from "react";
 import { Modal, TextField, Button } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import { addNotebookToUser } from "../api/api";
-import { useHistory } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
-import { addNotebooks } from "../features/notebooks";
+import { patchNotebook } from "../api/api";
+import { useDispatch } from "react-redux";
+import { updateNotebook } from "../features/notebooks";
+import { Notebook } from "../types";
+
+interface EditNotebookProps {
+  handleClose: () => void;
+  isOpen: boolean;
+  notebook: Notebook;
+}
 
 const useStyles = makeStyles((theme) => ({
   modalContainer: {},
@@ -28,24 +34,20 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function EditNotebook({ handleClose, isOpen, notebook }) {
+function EditNotebook({ handleClose, isOpen, notebook }: EditNotebookProps) {
   const [title, setTitle] = useState(notebook.title);
   const [description, setDescription] = useState(notebook.description);
   const classes = useStyles();
-  const userId = useSelector((state) => state.user.id);
-  const history = useHistory();
   const dispatch = useDispatch();
 
   const handleSubmit = () => {
-    addNotebookToUser({
-      userId: userId,
+    patchNotebook({
+      notebookId: notebook._id,
       title,
       description,
-    }).then((notebook) => {
-      dispatch(addNotebooks([notebook]));
-      if (notebook._id) {
-        history.push(`/notebook/${notebook._id}`);
-      }
+    }).then((updatedNotebook) => {
+      dispatch(updateNotebook(updatedNotebook));
+      handleClose();
     });
   };
 
@@ -73,7 +75,7 @@ function EditNotebook({ handleClose, isOpen, notebook }) {
           />
           <br />
           <Button onClick={handleSubmit} variant="contained" color="primary">
-            Create
+            Save
           </Button>
         </div>
       </div>

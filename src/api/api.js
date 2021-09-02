@@ -84,6 +84,18 @@ export const patchPage = async (page) => {
   return result;
 };
 
+export const patchNotebook = async (notebook) => {
+  const result = await axios
+    .patch(`http://localhost:4000/notebooks/${notebook._id}`, notebook)
+    .then((response) => {
+      return response;
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+  return result;
+};
+
 export const addPageToNotebook = async (id, title) => {
   const result = await axios
     .post(`http://localhost:4000/pages/${id}`, { title })
