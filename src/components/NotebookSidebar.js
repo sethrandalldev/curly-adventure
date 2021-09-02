@@ -1,14 +1,17 @@
 import React, { useState } from "react";
-import { Button } from "@material-ui/core";
+import { Button, IconButton, Tooltip } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { useSelector, useDispatch } from "react-redux";
 import { addPage, setSelected } from "../features/pages";
 import { addNotebookPage } from "../features/notebooks";
 import { addPageToNotebook } from "../api/api";
+import EditIcon from "@material-ui/icons/Edit";
+import EditNotebook from "./EditNotebook";
+import NewPage from "./NewPage";
 
 const useStyles = makeStyles((theme) => ({
   sidebar: {
-    width: "360px",
+    width: "400px",
     backgroundColor: "#282C34",
     color: "#ffffff",
     padding: 0,
@@ -72,6 +75,13 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: "bold",
     margin: 0,
   },
+  editButton: {
+    color: "#ffffff",
+  },
+  row: {
+    display: "flex",
+    justifyContent: "space-between",
+  },
 }));
 
 function NotebookSidebar({ notebook }) {
@@ -82,13 +92,8 @@ function NotebookSidebar({ notebook }) {
   );
   const selectedPage = useSelector((state) => state.pages.selected);
   const dispatch = useDispatch();
-
-  const handleClick = () => {
-    addPageToNotebook(notebook._id).then((page) => {
-      dispatch(addPage(page));
-      dispatch(addNotebookPage({ id: notebook._id, page }));
-    });
-  };
+  const [isNotebookModalOpen, setIsNotebookModalOpen] = useState(false);
+  const [isPageModalOpen, setIsPageModalOpen] = useState(false);
 
   const renderPages = () => {
     return pages.map((page) => {
@@ -116,9 +121,16 @@ function NotebookSidebar({ notebook }) {
   return (
     <div className={classes.sidebar}>
       <div className={classes.header}>
-        <h1 className={classes.title}>{notebook.title}</h1>
+        <div className={classes.row}>
+          <h1 className={classes.title}>{notebook.title}</h1>
+          <Tooltip title="Edit Notebook">
+            <IconButton onClick={() => setIsNotebookModalOpen(true)}>
+              <EditIcon className={classes.editButton} />
+            </IconButton>
+          </Tooltip>
+        </div>
         <h4 className={classes.description}>{notebook.description}</h4>
-        <Button variant="contained" onClick={handleClick}>
+        <Button variant="contained" onClick={() => setIsPageModalOpen(true)}>
           New Page
         </Button>
       </div>
@@ -147,6 +159,16 @@ function NotebookSidebar({ notebook }) {
       <div className={classes.sidebarBody}>
         {selectedMenuItem === "pages" ? renderPages() : renderSettings()}
       </div>
+      <EditNotebook
+        isOpen={isNotebookModalOpen}
+        handleClose={() => setIsNotebookModalOpen(false)}
+        notebook={notebook}
+      />
+      <NewPage
+        isOpen={isPageModalOpen}
+        handleClose={() => setIsPageModalOpen(false)}
+        notebook={notebook}
+      />
     </div>
   );
 }

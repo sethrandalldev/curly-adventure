@@ -84,9 +84,9 @@ export const patchPage = async (page) => {
   return result;
 };
 
-export const addPageToNotebook = async (id) => {
+export const addPageToNotebook = async (id, title) => {
   const result = await axios
-    .post(`http://localhost:4000/pages/${id}`)
+    .post(`http://localhost:4000/pages/${id}`, { title })
     .then((response) => {
       return response.data;
     })

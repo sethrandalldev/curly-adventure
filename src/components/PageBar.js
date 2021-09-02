@@ -14,6 +14,8 @@ const useStyles = makeStyles({
   saveButton: {},
   pageTitle: {
     margin: "0 20px",
+    width: "200px",
+    textAlign: "left",
   },
 });
 
