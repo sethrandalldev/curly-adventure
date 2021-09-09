@@ -46,7 +46,9 @@ function EditNotebook({ handleClose, isOpen, notebook }: EditNotebookProps) {
       title,
       description,
     }).then((updatedNotebook) => {
-      dispatch(updateNotebook(updatedNotebook));
+      dispatch(
+        updateNotebook({ notebookId: notebook._id, title, description })
+      );
       handleClose();
     });
   };

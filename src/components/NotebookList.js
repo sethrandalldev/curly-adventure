@@ -1,6 +1,5 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { getNotebooksByUser } from "../api/api";
-import NotebookListHeader from "./NotebookListHeader";
 import NotebookListItem from "./NotebookListItem";
 import { makeStyles } from "@material-ui/core/styles";
 import { useSelector, useDispatch } from "react-redux";
@@ -10,8 +9,13 @@ import {
   TableRow,
   TableCell,
   TableBody,
+  TextField,
+  Tooltip,
+  IconButton,
 } from "@material-ui/core";
+import AddIcon from "@material-ui/icons/Add";
 import { addNotebooks } from "../features/notebooks";
+import NewNotebook from "./NewNotebook";
 
 const useStyles = makeStyles({
   list: {
@@ -26,6 +30,12 @@ const useStyles = makeStyles({
     border: "3px solid #efefef",
     marginTop: 15,
   },
+  searchInput: {
+    width: 220,
+  },
+  header: {
+    textAlign: "left",
+  },
 });
 
 function NotebookList() {
@@ -33,6 +43,10 @@ function NotebookList() {
   const notebooks = useSelector((state) => state.notebooks.value);
   const classes = useStyles();
   const dispatch = useDispatch();
+  const [text, setText] = useState("");
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const modalToggle = () => setIsModalOpen(!isModalOpen);
 
   useEffect(() => {
     if (notebooks.length === 0) {
@@ -44,7 +58,19 @@ function NotebookList() {
 
   return (
     <div className={classes.list}>
-      <NotebookListHeader />
+      <TextField
+        className={classes.searchInput}
+        value={text}
+        onChange={(e) => setText(e.target.value)}
+        placeholder="Search for Notebook"
+        variant="outlined"
+      />
+      <Tooltip title="Create Notebook">
+        <IconButton onClick={modalToggle}>
+          <AddIcon />
+        </IconButton>
+      </Tooltip>
+      <NewNotebook isOpen={isModalOpen} handleClose={modalToggle} />
       <Table className={classes.table}>
         <TableHead className={classes.tableHead}>
           <TableRow>
@@ -57,7 +83,9 @@ function NotebookList() {
           {notebooks.length ? (
             notebooks.map((notebook) => {
               return (
-                <NotebookListItem notebook={notebook} key={notebook._id} />
+                notebook.title.toLowerCase().includes(text.toLowerCase()) && (
+                  <NotebookListItem notebook={notebook} key={notebook._id} />
+                )
               );
             })
           ) : (

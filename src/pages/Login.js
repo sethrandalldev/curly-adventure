@@ -6,7 +6,6 @@ import { login } from "../api/api";
 import { useHistory, Redirect } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setUser } from "../features/user";
-import store from "../app/store";
 
 const useStyles = makeStyles((theme) => ({
   formContainer: {

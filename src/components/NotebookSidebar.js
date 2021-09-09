@@ -2,12 +2,11 @@ import React, { useState } from "react";
 import { Button, IconButton, Tooltip } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { useSelector, useDispatch } from "react-redux";
-import { addPage, setSelected } from "../features/pages";
-import { addNotebookPage } from "../features/notebooks";
-import { addPageToNotebook } from "../api/api";
+import { setSelected } from "../features/pages";
 import EditIcon from "@material-ui/icons/Edit";
 import EditNotebook from "./EditNotebook";
 import NewPage from "./NewPage";
+import PageSearch from "./PageSearch";
 
 const useStyles = makeStyles((theme) => ({
   sidebar: {
@@ -130,9 +129,12 @@ function NotebookSidebar({ notebook }) {
           </Tooltip>
         </div>
         <h4 className={classes.description}>{notebook.description}</h4>
-        <Button variant="contained" onClick={() => setIsPageModalOpen(true)}>
-          New Page
-        </Button>
+        <div>
+          <PageSearch />
+          <Button variant="contained" onClick={() => setIsPageModalOpen(true)}>
+            New Page
+          </Button>
+        </div>
       </div>
       <div className={classes.sidebarMenu}>
         <p
