@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Modal, TextField, Button } from "@material-ui/core";
+import { Modal, TextField, Button, Theme } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { useDispatch } from "react-redux";
 import { addPage } from "../features/pages";
@@ -13,7 +13,7 @@ interface NewPageProps {
   notebook: Notebook;
 }
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles((theme: Theme) => ({
   modalContainer: {},
   modal: {
     backgroundColor: "#ffffff",

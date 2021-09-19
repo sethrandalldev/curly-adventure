@@ -2,6 +2,7 @@ import React from "react";
 import { Button } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { useSelector } from "react-redux";
+import { RootState } from "../app/store";
 
 const useStyles = makeStyles({
   pageBar: {
@@ -19,9 +20,13 @@ const useStyles = makeStyles({
   },
 });
 
-const PageBar = ({ handleClick }) => {
+interface PageBarProps {
+  handleClick: () => void;
+}
+
+const PageBar = ({ handleClick }: PageBarProps) => {
   const classes = useStyles();
-  const selectedPage = useSelector((state) => state.pages.selected);
+  const selectedPage = useSelector((state: RootState) => state.pages.selected);
 
   return (
     <div className={classes.pageBar}>

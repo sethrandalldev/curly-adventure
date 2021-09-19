@@ -2,7 +2,6 @@ import "./App.css";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
-import Profile from "./pages/Profile";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import PrivateRoute from "./PrivateRoute";
 import NotebookRoute from "./NotebookRoute";
@@ -24,10 +23,6 @@ function App() {
           <Route exact path="/register">
             <Register />
           </Route>
-          <PrivateRoute exact path="/profile">
-            <NavBar />
-            <Profile />
-          </PrivateRoute>
           <NotebookRoute path="/notebook/:id">
             <NavBar />
             <Notebook />

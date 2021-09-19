@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Modal, TextField, Button } from "@material-ui/core";
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles, Theme } from "@material-ui/core/styles";
 import { patchNotebook } from "../api/api";
 import { useDispatch } from "react-redux";
 import { updateNotebook } from "../features/notebooks";
@@ -12,7 +12,7 @@ interface EditNotebookProps {
   notebook: Notebook;
 }
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles((theme: Theme) => ({
   modalContainer: {},
   modal: {
     backgroundColor: "#ffffff",

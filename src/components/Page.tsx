@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { InputBase } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import PageBar from "../components/PageBar";
+import PageBar from "./PageBar";
 import { useSelector, useDispatch } from "react-redux";
 import { patchPage } from "../api/api";
 import { updatePage } from "../features/pages";
+import { RootState } from "../app/store";
+import { Page as P } from "../types";
 
 const useStyles = makeStyles({
   page: {
@@ -21,7 +23,9 @@ const useStyles = makeStyles({
 
 function Page() {
   const classes = useStyles();
-  const selectedPage = useSelector((state) => state.pages.selected);
+  const selectedPage: P | null = useSelector(
+    (state: RootState) => state.pages.selected
+  );
   const [text, setText] = useState(selectedPage?.body);
   const dispatch = useDispatch();
 
@@ -30,13 +34,15 @@ function Page() {
   }, [selectedPage]);
 
   const handleClick = () => {
-    patchPage({
-      id: selectedPage._id,
-      title: selectedPage.title,
-      body: text,
-    }).then((page) => {
-      dispatch(updatePage({ id: selectedPage._id, body: text }));
-    });
+    if (selectedPage) {
+      patchPage({
+        id: selectedPage._id,
+        title: selectedPage.title,
+        body: text,
+      }).then((page) => {
+        dispatch(updatePage({ id: selectedPage._id, body: text }));
+      });
+    }
   };
 
   return (

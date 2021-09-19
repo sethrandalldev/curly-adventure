@@ -1,11 +1,19 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { Page } from "../types";
+
+interface PagesState {
+  value: Array<Page>;
+  selected: Page | null;
+}
+
+const initialState: PagesState = {
+  value: [],
+  selected: null,
+};
 
 export const pages = createSlice({
   name: "pages",
-  initialState: {
-    value: [],
-    selected: null,
-  },
+  initialState,
   reducers: {
     addPage: (state, action) => {
       state.value.push(action.payload);

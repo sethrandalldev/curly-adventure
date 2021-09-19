@@ -6,6 +6,7 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import { deleteNotebook } from "../api/api";
 import { removeNotebook } from "../features/notebooks";
 import { useDispatch } from "react-redux";
+import { Notebook } from "../types";
 
 const useStyles = makeStyles({
   row: {
@@ -16,12 +17,16 @@ const useStyles = makeStyles({
   },
 });
 
-function NotebookListItem({ notebook }) {
+interface NotebookListItemProps {
+  notebook: Notebook;
+}
+
+function NotebookListItem({ notebook }: NotebookListItemProps) {
   const history = useHistory();
   const classes = useStyles();
   const dispatch = useDispatch();
 
-  const handleClick = (e) => {
+  const handleClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.stopPropagation();
     deleteNotebook(notebook._id, notebook.userId).then(() => {
       dispatch(removeNotebook(notebook._id));

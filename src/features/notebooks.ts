@@ -1,10 +1,17 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { Notebook } from "../types";
+
+interface NotebooksState {
+  value: Array<Notebook>;
+}
+
+const initialState: NotebooksState = {
+  value: [],
+};
 
 export const notebooks = createSlice({
   name: "notebooks",
-  initialState: {
-    value: [],
-  },
+  initialState,
   reducers: {
     addNotebooks: (state, action) => {
       state.value = state.value.concat(action.payload);
@@ -14,18 +21,18 @@ export const notebooks = createSlice({
     },
     removeNotebook: (state, action) => {
       state.value = state.value.filter(
-        (notebook) => notebook._id !== action.payload
+        (notebook: Notebook) => notebook._id !== action.payload
       );
     },
     addNotebookPage: (state, action) => {
       const notebookIndex = state.value.findIndex(
-        (notebook) => notebook._id === action.payload.id
+        (notebook: Notebook) => notebook._id === action.payload.id
       );
       state.value[notebookIndex].pages.push(action.payload.page);
     },
     updateNotebook: (state, action) => {
       const notebookIndex = state.value.findIndex(
-        (notebook) => notebook._id === action.payload.notebookId
+        (notebook: Notebook) => notebook._id === action.payload.notebookId
       );
       state.value[notebookIndex].title = action.payload.title;
       state.value[notebookIndex].description = action.payload.description;

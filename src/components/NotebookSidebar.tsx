@@ -7,8 +7,11 @@ import EditIcon from "@material-ui/icons/Edit";
 import EditNotebook from "./EditNotebook";
 import NewPage from "./NewPage";
 import PageSearch from "./PageSearch";
+import { Notebook } from "../types";
+import { RootState } from "../app/store";
+import { Page } from "../types";
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles({
   sidebar: {
     width: "400px",
     backgroundColor: "#282C34",
@@ -42,7 +45,6 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: "10px 10px 0 0",
     margin: "0 5px",
     borderBottom: 0,
-    fontWeight: "light",
     fontSize: "1.2rem",
     cursor: "pointer",
   },
@@ -81,15 +83,22 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     justifyContent: "space-between",
   },
-}));
+  sidebarBody: {},
+});
 
-function NotebookSidebar({ notebook }) {
+interface NotebookSidebarProps {
+  notebook: Notebook;
+}
+
+function NotebookSidebar({ notebook }: NotebookSidebarProps) {
   const [selectedMenuItem, setSelectedMenuItem] = useState("pages");
   const classes = useStyles();
-  const pages = useSelector((state) => state.pages.value).filter(
-    (page) => page.notebookId === notebook._id
+  const pages: Array<Page> = useSelector(
+    (state: RootState) => state.pages.value
+  ).filter((page: Page) => page.notebookId === notebook._id);
+  const selectedPage: Page | null = useSelector(
+    (state: RootState) => state.pages.selected
   );
-  const selectedPage = useSelector((state) => state.pages.selected);
   const dispatch = useDispatch();
   const [isNotebookModalOpen, setIsNotebookModalOpen] = useState(false);
   const [isPageModalOpen, setIsPageModalOpen] = useState(false);

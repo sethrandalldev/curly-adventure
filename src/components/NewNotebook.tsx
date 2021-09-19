@@ -1,12 +1,13 @@
 import React, { useState } from "react";
-import { Modal, TextField, Button } from "@material-ui/core";
+import { Modal, TextField, Button, Theme } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { addNotebookToUser } from "../api/api";
 import { useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { addNotebooks } from "../features/notebooks";
+import { RootState } from "../app/store";
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles((theme: Theme) => ({
   modalContainer: {},
   modal: {
     backgroundColor: "#ffffff",
@@ -28,11 +29,16 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function NewNotebook({ handleClose, isOpen }) {
+interface NewNotebookProps {
+  handleClose: () => void;
+  isOpen: boolean;
+}
+
+function NewNotebook({ handleClose, isOpen }: NewNotebookProps) {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const classes = useStyles();
-  const userId = useSelector((state) => state.user.id);
+  const userId = useSelector((state: RootState) => state.user.id);
   const history = useHistory();
   const dispatch = useDispatch();
 

@@ -16,6 +16,8 @@ import {
 import AddIcon from "@material-ui/icons/Add";
 import { addNotebooks } from "../features/notebooks";
 import NewNotebook from "./NewNotebook";
+import { RootState } from "../app/store";
+import { Notebook } from "../types";
 
 const useStyles = makeStyles({
   list: {
@@ -36,11 +38,14 @@ const useStyles = makeStyles({
   header: {
     textAlign: "left",
   },
+  tableHead: {},
 });
 
 function NotebookList() {
-  const userId = useSelector((state) => state.user.id);
-  const notebooks = useSelector((state) => state.notebooks.value);
+  const userId: string = useSelector((state: RootState) => state.user.id);
+  const notebooks: Array<Notebook> = useSelector(
+    (state: RootState) => state.notebooks.value
+  );
   const classes = useStyles();
   const dispatch = useDispatch();
   const [text, setText] = useState("");
@@ -50,7 +55,7 @@ function NotebookList() {
 
   useEffect(() => {
     if (notebooks.length === 0) {
-      getNotebooksByUser(userId).then((notebooksData) => {
+      getNotebooksByUser(userId).then((notebooksData: any) => {
         dispatch(addNotebooks(notebooksData.data));
       });
     }
