@@ -15,14 +15,15 @@ const style = {
 
 interface ConfirmationModalProps {
   open: boolean;
-  handleClose: () => void;
+  handleClose: (e: any) => void;
+  handleConfirm: () => void;
 }
 
 const ConfirmationModal = ({ open, handleClose }: ConfirmationModalProps) => {
   return (
     <Modal
       open={open}
-      onClose={handleClose}
+      onClose={(e) => handleClose(e)}
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
     >

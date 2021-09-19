@@ -30,9 +30,9 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   link: {
     textDecoration: "none",
-    color: "#000",
+    color: "#fff",
     "& :visited": {
-      color: "#000 !important",
+      color: "#fff !important",
     },
   },
 }));

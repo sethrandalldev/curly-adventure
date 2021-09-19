@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import { TableRow, TableCell, IconButton, Tooltip } from "@material-ui/core";
@@ -7,6 +7,7 @@ import { deleteNotebook } from "../api/api";
 import { removeNotebook } from "../features/notebooks";
 import { useDispatch } from "react-redux";
 import { Notebook } from "../types";
+import ConfirmationModal from "./ConfirmationModal";
 
 const useStyles = makeStyles({
   row: {
@@ -25,9 +26,14 @@ function NotebookListItem({ notebook }: NotebookListItemProps) {
   const history = useHistory();
   const classes = useStyles();
   const dispatch = useDispatch();
+  const [open, setOpen] = useState(false);
 
-  const handleClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+  const handleClose = (e: any) => {
     e.stopPropagation();
+    setOpen(false);
+  };
+
+  const handleDelete = () => {
     deleteNotebook(notebook._id, notebook.userId).then(() => {
       dispatch(removeNotebook(notebook._id));
     });
@@ -42,10 +48,20 @@ function NotebookListItem({ notebook }: NotebookListItemProps) {
       <TableCell>{notebook.description}</TableCell>
       <TableCell>
         <Tooltip title="Delete Notebook">
-          <IconButton onClick={(e) => handleClick(e)}>
+          <IconButton
+            onClick={(e) => {
+              e.stopPropagation();
+              setOpen(true);
+            }}
+          >
             <DeleteIcon />
           </IconButton>
         </Tooltip>
+        <ConfirmationModal
+          open={open}
+          handleConfirm={handleDelete}
+          handleClose={handleClose}
+        />
       </TableCell>
     </TableRow>
   );

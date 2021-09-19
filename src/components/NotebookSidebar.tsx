@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, IconButton, Tooltip } from "@material-ui/core";
+import { Button, IconButton, TextField, Tooltip } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { useSelector, useDispatch } from "react-redux";
 import { setSelected } from "../features/pages";
@@ -84,6 +84,11 @@ const useStyles = makeStyles({
     justifyContent: "space-between",
   },
   sidebarBody: {},
+  search: {
+    backgroundColor: "#ffffff",
+    borderRadius: 15,
+    margin: "10px 0",
+  },
 });
 
 interface NotebookSidebarProps {
@@ -102,24 +107,31 @@ function NotebookSidebar({ notebook }: NotebookSidebarProps) {
   const dispatch = useDispatch();
   const [isNotebookModalOpen, setIsNotebookModalOpen] = useState(false);
   const [isPageModalOpen, setIsPageModalOpen] = useState(false);
+  const [searchInput, setSearchInput] = useState("");
 
   const renderPages = () => {
-    return pages.map((page) => {
-      return (
-        <p
-          className={
-            selectedPage?._id === page._id ? classes.selectedPage : classes.page
-          }
-          onClick={() =>
-            dispatch(
-              setSelected(pages[pages.findIndex((x) => x._id === page._id)])
-            )
-          }
-        >
-          {page.title || "Untitled"}
-        </p>
-      );
-    });
+    return pages
+      .filter((page) =>
+        page.title.toLowerCase().includes(searchInput.toLowerCase())
+      )
+      .map((page) => {
+        return (
+          <p
+            className={
+              selectedPage?._id === page._id
+                ? classes.selectedPage
+                : classes.page
+            }
+            onClick={() =>
+              dispatch(
+                setSelected(pages[pages.findIndex((x) => x._id === page._id)])
+              )
+            }
+          >
+            {page.title || "Untitled"}
+          </p>
+        );
+      });
   };
 
   const renderSettings = () => {
@@ -139,7 +151,14 @@ function NotebookSidebar({ notebook }: NotebookSidebarProps) {
         </div>
         <h4 className={classes.description}>{notebook.description}</h4>
         <div>
-          <PageSearch />
+          <TextField
+            className={classes.search}
+            id="page-search"
+            placeholder="Search"
+            variant="outlined"
+            value={searchInput}
+            onChange={(e) => setSearchInput(e.target.value)}
+          />
           <Button variant="contained" onClick={() => setIsPageModalOpen(true)}>
             New Page
           </Button>
