@@ -6,7 +6,6 @@ import { setSelected } from "../features/pages";
 import EditIcon from "@material-ui/icons/Edit";
 import EditNotebook from "./EditNotebook";
 import NewPage from "./NewPage";
-import PageSearch from "./PageSearch";
 import { Notebook } from "../types";
 import { RootState } from "../app/store";
 import { Page } from "../types";
