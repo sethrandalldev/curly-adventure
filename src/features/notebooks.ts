@@ -37,6 +37,12 @@ export const notebooks = createSlice({
       state.value[notebookIndex].title = action.payload.title;
       state.value[notebookIndex].description = action.payload.description;
     },
+    updateNotebookPage: (state, action) => {
+      const notebookIndex = state.value.findIndex(
+        (notebook: Notebook) => notebook._id === action.payload.notebookId
+      );
+      state.value[notebookIndex].pages.push(action.payload);
+    },
   },
 });
 
@@ -47,6 +53,7 @@ export const {
   removeNotebook,
   addNotebookPage,
   updateNotebook,
+  updateNotebookPage,
 } = notebooks.actions;
 
 export default notebooks.reducer;

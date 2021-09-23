@@ -6,7 +6,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { patchPage } from "../api/api";
 import { updatePage } from "../features/pages";
 import { RootState } from "../app/store";
-import { Page as P } from "../types";
+import { Notebook, Page as P } from "../types";
 
 const useStyles = makeStyles({
   page: {
@@ -21,7 +21,11 @@ const useStyles = makeStyles({
   },
 });
 
-function Page() {
+interface PageProps {
+  notebook: Notebook;
+}
+
+function Page({ notebook }: PageProps) {
   const classes = useStyles();
   const selectedPage: P | null = useSelector(
     (state: RootState) => state.pages.selected
@@ -47,7 +51,7 @@ function Page() {
 
   return (
     <div className={classes.page}>
-      <PageBar handleClick={handleClick} />
+      <PageBar handleClick={handleClick} notebook={notebook} />
       <InputBase
         className={classes.textContainer}
         multiline

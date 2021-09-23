@@ -40,7 +40,7 @@ function Notebook() {
     <div>
       <div className={classes.notebook}>
         <NotebookSidebar notebook={notebook} />
-        <Page />
+        <Page notebook={notebook} />
       </div>
     </div>
   ) : (

@@ -5,6 +5,7 @@ import { RootState } from "../app/store";
 import EditIcon from "@material-ui/icons/Edit";
 import { useState } from "react";
 import EditPage from "./EditPage";
+import { Notebook } from "../types";
 
 const useStyles = makeStyles({
   pageBar: {
@@ -30,9 +31,10 @@ const useStyles = makeStyles({
 
 interface PageBarProps {
   handleClick: () => void;
+  notebook: Notebook;
 }
 
-const PageBar = ({ handleClick }: PageBarProps) => {
+const PageBar = ({ handleClick, notebook }: PageBarProps) => {
   const classes = useStyles();
   const selectedPage = useSelector((state: RootState) => state.pages.selected);
   const [isPageModalOpen, setIsPageModalOpen] = useState(false);
@@ -66,6 +68,7 @@ const PageBar = ({ handleClick }: PageBarProps) => {
       </Button>
       {selectedPage ? (
         <EditPage
+          notebook={notebook}
           isOpen={isPageModalOpen}
           handleClose={() => setIsPageModalOpen(false)}
           page={selectedPage}
