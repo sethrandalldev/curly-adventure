@@ -1,8 +1,10 @@
-import React from "react";
-import { Button } from "@material-ui/core";
+import { Button, Tooltip, IconButton, TextField } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { useSelector } from "react-redux";
 import { RootState } from "../app/store";
+import EditIcon from "@material-ui/icons/Edit";
+import { useState } from "react";
+import EditPage from "./EditPage";
 
 const useStyles = makeStyles({
   pageBar: {
@@ -13,10 +15,16 @@ const useStyles = makeStyles({
     alignItems: "center",
   },
   saveButton: {},
-  pageTitle: {
-    margin: "0 20px",
-    width: "200px",
+  title: {
+    margin: " 0 0 0 20px",
     textAlign: "left",
+    fontSize: "1.5rem",
+  },
+  editButton: {
+    margin: "0 20px",
+  },
+  titleInput: {
+    fontSize: "1.5rem",
   },
 });
 
@@ -27,10 +35,27 @@ interface PageBarProps {
 const PageBar = ({ handleClick }: PageBarProps) => {
   const classes = useStyles();
   const selectedPage = useSelector((state: RootState) => state.pages.selected);
+  const [isPageModalOpen, setIsPageModalOpen] = useState(false);
+  const [title, setTitle] = useState(selectedPage?.title);
 
   return (
     <div className={classes.pageBar}>
-      <h2 className={classes.pageTitle}>{selectedPage?.title || "Untitled"}</h2>
+      <TextField
+        inputProps={{
+          className: classes.titleInput,
+        }}
+        InputProps={{
+          disableUnderline: true,
+        }}
+        className={classes.title}
+        value={title}
+        onChange={(e) => setTitle(e.target.value)}
+      />
+      <Tooltip title="Edit Page Title">
+        <IconButton onClick={() => setIsPageModalOpen(true)}>
+          <EditIcon className={classes.editButton} />
+        </IconButton>
+      </Tooltip>
       <Button
         className={classes.saveButton}
         variant="contained"
@@ -39,6 +64,13 @@ const PageBar = ({ handleClick }: PageBarProps) => {
       >
         Save
       </Button>
+      {selectedPage ? (
+        <EditPage
+          isOpen={isPageModalOpen}
+          handleClose={() => setIsPageModalOpen(false)}
+          page={selectedPage}
+        />
+      ) : null}
     </div>
   );
 };
