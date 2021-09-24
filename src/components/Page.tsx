@@ -44,7 +44,13 @@ function Page({ notebook }: PageProps) {
         title: selectedPage.title,
         body: text,
       }).then((page) => {
-        dispatch(updatePage({ id: selectedPage._id, body: text }));
+        dispatch(
+          updatePage({
+            id: selectedPage._id,
+            body: text,
+            title: selectedPage.title,
+          })
+        );
       });
     }
   };

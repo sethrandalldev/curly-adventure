@@ -25,9 +25,10 @@ export const pages = createSlice({
       state.selected = action.payload;
     },
     updatePage: (state, action) => {
-      const pageIndex = state.value.findIndex(
-        (page) => page._id === action.payload.pageId
-      );
+      const pageIndex = state.value.findIndex((page) => {
+        return page._id === action.payload.id;
+      });
+      console.log(pageIndex);
       state.value[pageIndex].title = action.payload.title;
       state.value[pageIndex].body = action.payload.body;
     },

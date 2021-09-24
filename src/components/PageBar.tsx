@@ -4,7 +4,6 @@ import { useSelector } from "react-redux";
 import { RootState } from "../app/store";
 import EditIcon from "@material-ui/icons/Edit";
 import { useState } from "react";
-import EditPage from "./EditPage";
 import { Notebook } from "../types";
 
 const useStyles = makeStyles({
@@ -66,14 +65,6 @@ const PageBar = ({ handleClick, notebook }: PageBarProps) => {
       >
         Save
       </Button>
-      {selectedPage ? (
-        <EditPage
-          notebook={notebook}
-          isOpen={isPageModalOpen}
-          handleClose={() => setIsPageModalOpen(false)}
-          page={selectedPage}
-        />
-      ) : null}
     </div>
   );
 };
