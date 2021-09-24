@@ -57,7 +57,7 @@ function Page({ notebook }: PageProps) {
 
   return (
     <div className={classes.page}>
-      <PageBar handleClick={handleClick} notebook={notebook} />
+      <PageBar handleClick={handleClick} />
       <InputBase
         className={classes.textContainer}
         multiline

@@ -58,17 +58,18 @@ function NewPage({ handleClose, isOpen, notebook }: NewPageProps) {
     >
       <div className={classes.modal}>
         <h2 className={classes.header}>New Page</h2>
-        <div className={classes.inputContainer}>
+        <form onSubmit={handleSubmit} className={classes.inputContainer}>
           <TextField
             onChange={(e) => setTitle(e.target.value)}
             value={title}
             label="Title"
+            required={true}
           />
           <br />
-          <Button onClick={handleSubmit} variant="contained" color="primary">
+          <Button type="submit" variant="contained" color="primary">
             Create
           </Button>
-        </div>
+        </form>
       </div>
     </Modal>
   );

@@ -1,10 +1,9 @@
-import { Button, Tooltip, IconButton, TextField } from "@material-ui/core";
+import { Button, TextField } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import { useSelector } from "react-redux";
+import { useSelector, connect } from "react-redux";
 import { RootState } from "../app/store";
-import EditIcon from "@material-ui/icons/Edit";
-import { useState } from "react";
-import { Notebook } from "../types";
+import { useState, useEffect } from "react";
+import { Page } from "../types";
 
 const useStyles = makeStyles({
   pageBar: {
@@ -28,16 +27,25 @@ const useStyles = makeStyles({
   },
 });
 
+const mapStateToProps = (state: RootState) => {
+  return {
+    selected: state.pages.selected,
+  };
+};
+
 interface PageBarProps {
   handleClick: () => void;
-  notebook: Notebook;
+  selected: Page | null;
 }
 
-const PageBar = ({ handleClick, notebook }: PageBarProps) => {
+const PageBar = ({ handleClick, selected }: PageBarProps) => {
   const classes = useStyles();
   const selectedPage = useSelector((state: RootState) => state.pages.selected);
-  const [isPageModalOpen, setIsPageModalOpen] = useState(false);
   const [title, setTitle] = useState(selectedPage?.title);
+
+  useEffect(() => {
+    setTitle(selected?.title);
+  }, [selected]);
 
   return (
     <div className={classes.pageBar}>
@@ -52,11 +60,6 @@ const PageBar = ({ handleClick, notebook }: PageBarProps) => {
         value={title}
         onChange={(e) => setTitle(e.target.value)}
       />
-      <Tooltip title="Edit Page Title">
-        <IconButton onClick={() => setIsPageModalOpen(true)}>
-          <EditIcon className={classes.editButton} />
-        </IconButton>
-      </Tooltip>
       <Button
         className={classes.saveButton}
         variant="contained"
@@ -69,4 +72,4 @@ const PageBar = ({ handleClick, notebook }: PageBarProps) => {
   );
 };
 
-export default PageBar;
+export default connect(mapStateToProps)(PageBar);
