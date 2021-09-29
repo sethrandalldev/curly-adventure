@@ -33,10 +33,12 @@ function NotebookListItem({ notebook }: NotebookListItemProps) {
     setOpen(false);
   };
 
-  const handleDelete = () => {
+  const handleDelete = (e: any) => {
+    e.stopPropagation();
     deleteNotebook(notebook._id, notebook.userId).then(() => {
       dispatch(removeNotebook(notebook._id));
     });
+    setOpen(false);
   };
 
   return (
@@ -58,6 +60,7 @@ function NotebookListItem({ notebook }: NotebookListItemProps) {
           </IconButton>
         </Tooltip>
         <ConfirmationModal
+          title="Delete this notebook?"
           open={open}
           handleConfirm={handleDelete}
           handleClose={handleClose}

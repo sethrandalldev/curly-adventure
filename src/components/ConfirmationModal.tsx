@@ -1,4 +1,4 @@
-import { Modal, Box, Typography } from "@material-ui/core";
+import { Modal, Box, Typography, Button } from "@material-ui/core";
 import React from "react";
 
 const style = {
@@ -14,12 +14,18 @@ const style = {
 };
 
 interface ConfirmationModalProps {
+  title: string;
   open: boolean;
   handleClose: (e: any) => void;
-  handleConfirm: () => void;
+  handleConfirm: (e: any) => void;
 }
 
-const ConfirmationModal = ({ open, handleClose }: ConfirmationModalProps) => {
+const ConfirmationModal = ({
+  title,
+  open,
+  handleClose,
+  handleConfirm,
+}: ConfirmationModalProps) => {
   return (
     <Modal
       open={open}
@@ -29,11 +35,19 @@ const ConfirmationModal = ({ open, handleClose }: ConfirmationModalProps) => {
     >
       <Box sx={style}>
         <Typography id="modal-modal-title" variant="h6" component="h2">
-          Text in a modal
+          {title}
         </Typography>
         <Typography id="modal-modal-description">
-          Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
+          This action is permanent.
         </Typography>
+        <div>
+          <Button variant="text" onClick={handleClose}>
+            Cancel
+          </Button>
+          <Button color="primary" variant="contained" onClick={handleConfirm}>
+            Confirm
+          </Button>
+        </div>
       </Box>
     </Modal>
   );
