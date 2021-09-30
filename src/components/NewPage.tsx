@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Modal, TextField, Button, Theme } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { useDispatch } from "react-redux";
-import { addPage } from "../features/pages";
+import { addPage, setSelected } from "../features/pages";
 import { addNotebookPage } from "../features/notebooks";
 import { addPageToNotebook } from "../api/api";
 import { Notebook } from "../types";
@@ -40,10 +40,12 @@ function NewPage({ handleClose, isOpen, notebook }: NewPageProps) {
   const classes = useStyles();
   const dispatch = useDispatch();
 
-  const handleSubmit = () => {
+  const handleSubmit = (e: any) => {
+    e.preventDefault();
     addPageToNotebook(notebook._id, title).then((page) => {
       dispatch(addPage(page));
       dispatch(addNotebookPage({ id: notebook._id, page }));
+      dispatch(setSelected(page));
       handleClose();
     });
   };
